@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>magazinmercedes.ru — запчасти Mercedes-Benz OEM</title>
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <script defer src="js/alpine.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: #F2F4F6; color: #121417; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+    .hit { min-height: 48px; min-width: 48px; }
+    .row-pad { padding: 12px 16px; }
+    input:focus, select:focus, button:focus-visible {
+      outline: 2px solid #C4A35A;
+      outline-offset: 1px;
+    }
+    .sticky-node { position: sticky; top: 72px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: #C5CCD3; }
+    .product-media { position: relative; overflow: hidden; background: #F2F4F6; }
+    .product-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .product-media-btn { display: block; width: 100%; height: 100%; padding: 0; border: 0; cursor: zoom-in; }
+    .lightbox-stage { touch-action: none; }
+    .lightbox-stage img {
+      max-width: min(96vw, 1100px);
+      max-height: 82vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.15s ease;
+      transform-origin: center center;
+      cursor: grab;
+    }
+    .lightbox-stage img.is-zoomed { cursor: grabbing; }
+  </style>
+</head>
+<body x-data="epcApp()" x-cloak class="min-h-screen pb-24">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 border-b border-rule bg-ink text-surface">
+    <div class="mx-auto flex max-w-terminal flex-wrap items-center gap-3 px-4 py-2">
+      <button type="button" @click="view = 'home'; window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex min-h-touch items-center gap-2 text-left hover:text-accent" aria-label="На главную">
+        <img src="photos/Mercedes-Benz.svg" alt="Mercedes-Benz" class="h-9 w-9 shrink-0 invert" width="36" height="36" />
+        <div>
+          <div class="text-[15px] font-semibold leading-tight">magazinmercedes.ru</div>
+          <div class="text-[12px] leading-4 text-rule">независимый специалист OEM</div>
+        </div>
+      </button>
+
+      <div class="ml-auto flex flex-wrap items-center gap-2 text-[12px] text-rule">
+        <span class="hidden sm:inline">пн–пт 09:00–21:00 · сб–вс 10:00–20:00</span>
+        <a href="tel:+79851151010" class="hit inline-flex items-center px-3 mono text-[15px] font-medium text-surface hover:text-accent">+7 985 115-10-10</a>
+
+        <!-- Messengers ≥768px -->
+        <div class="hidden md:flex items-center overflow-hidden rounded border border-[#2a2e33] bg-[#1a1d21]">
+          <a :href="messengerHref('whatsapp')" target="_blank" rel="noopener noreferrer"
+             class="hit inline-flex w-12 items-center justify-center text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent"
+             aria-label="WhatsApp" title="WhatsApp">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <span class="h-6 w-px shrink-0 bg-[#2a2e33]" aria-hidden="true"></span>
+          <a :href="messengerHref('telegram')" target="_blank" rel="noopener noreferrer"
+             class="hit inline-flex w-12 items-center justify-center text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent"
+             aria-label="Telegram" title="Telegram">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <span class="h-6 w-px shrink-0 bg-[#2a2e33]" aria-hidden="true"></span>
+          <a :href="messengerHref('max')" target="_blank" rel="noopener noreferrer"
+             class="hit inline-flex w-12 items-center justify-center text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent"
+             aria-label="Max" title="Max">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" transform="translate(-3.165 -3.622) scale(0.030308)" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"/></svg>
+          </a>
+        </div>
+
+        <!-- Messengers <768px: toggle -->
+        <button type="button" @click="openMessengers = !openMessengers"
+          class="hit md:hidden inline-flex items-center rounded border border-[#2a2e33] bg-[#1a1d21] px-3 text-[13px] text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent"
+          :aria-expanded="openMessengers" aria-controls="messenger-panel">
+          Написать
+        </button>
+
+        <button type="button" @click="openCart = true"
+          class="group hit inline-flex items-center gap-2.5 rounded border border-[#2a2e33] bg-[#1a1d21] px-3 text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent"
+          aria-label="Корзина">
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+          <span x-show="cartCount() > 0" x-cloak class="inline-flex items-baseline gap-2 mono whitespace-nowrap leading-none">
+            <span class="text-[15px] font-semibold text-accent" x-text="cartCount()"></span>
+            <span class="text-[13px] text-[#5C6570] transition-colors duration-150 group-hover:text-accent">·</span>
+            <span class="text-[15px] font-semibold text-surface transition-colors duration-150 group-hover:text-accent" x-text="formatMoney(cartTotal()) + ' ₽'"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile messenger panel under header -->
+    <div id="messenger-panel" x-show="openMessengers" x-cloak class="md:hidden border-t border-[#2a2e33] bg-[#1a1d21]">
+      <div class="mx-auto max-w-terminal space-y-1 px-4 py-2">
+        <a :href="messengerHref('whatsapp')" target="_blank" rel="noopener noreferrer" @click="openMessengers = false"
+           class="hit flex w-full items-center gap-3 rounded border border-[#2a2e33] bg-[#121417] px-3 text-[13px] text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent">
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a :href="messengerHref('telegram')" target="_blank" rel="noopener noreferrer" @click="openMessengers = false"
+           class="hit flex w-full items-center gap-3 rounded border border-[#2a2e33] bg-[#121417] px-3 text-[13px] text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent">
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Telegram
+        </a>
+        <a :href="messengerHref('max')" target="_blank" rel="noopener noreferrer" @click="openMessengers = false"
+           class="hit flex w-full items-center gap-3 rounded border border-[#2a2e33] bg-[#121417] px-3 text-[13px] text-surface transition-colors duration-150 hover:bg-[#24282e] hover:text-accent">
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" transform="translate(-3.165 -3.622) scale(0.030308)" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"/></svg>
+          Max
+        </a>
+      </div>
+    </div>
+
+    <!-- Search bar — first commercial screen -->
+    <div class="border-t border-[#2a2e33] bg-[#1a1d21]">
+      <div class="mx-auto grid max-w-terminal gap-2 px-4 py-3 md:grid-cols-12">
+        <div class="md:col-span-4">
+          <label class="mb-1 block text-[12px] text-rule">Артикул OEM</label>
+          <div class="flex gap-1">
+            <input type="text" x-model="searchArticle" @keydown.enter="runArticleSearch()" placeholder="A2548174600"
+              class="hit w-full border border-rule bg-surface px-3 mono text-[15px] text-ink placeholder:text-mute" />
+            <button type="button" @click="runArticleSearch()" class="hit border border-accent bg-accent px-4 text-[13px] font-semibold text-ink hover:brightness-95">Найти артикул</button>
+          </div>
+        </div>
+        <div class="md:col-span-5">
+          <label class="mb-1 block text-[12px] text-rule">VIN 17 знаков</label>
+          <div class="flex gap-1">
+            <input type="text" maxlength="17" x-model="vinInput" @input="vinInput = vinInput.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g,'')"
+              placeholder="WDD2130041A123456"
+              class="hit w-full border border-rule bg-surface px-3 mono text-[15px] text-ink placeholder:text-mute" />
+            <button type="button" @click="checkVin()" class="hit border border-rule bg-ink px-4 text-[13px] text-surface hover:border-accent hover:text-accent">Проверить по VIN</button>
+          </div>
+        </div>
+        <div class="md:col-span-3 flex items-end">
+          <div class="hit flex w-full items-center border px-3 text-[12px]"
+               :class="vinState === 'ok' ? 'border-ok bg-ok/10 text-ok' : vinState === 'fail' ? 'border-fail bg-fail/10 text-fail' : 'border-rule text-rule'">
+            <template x-if="vinState === 'idle'">
+              <span>VIN не проверен</span>
+            </template>
+            <template x-if="vinState === 'ok'">
+              <span class="flex items-center gap-2">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                <span x-text="vinLabel"></span>
+              </span>
+            </template>
+            <template x-if="vinState === 'fail'">
+              <span x-text="vinLabel"></span>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-terminal px-4 py-4">
+
+    <!-- View tabs — product chrome + client-only metrics -->
+    <div class="mb-4 flex flex-wrap items-stretch gap-2">
+      <div class="flex flex-wrap gap-1 border border-rule bg-surface p-2">
+        <template x-for="t in views.filter(v => v.id !== 'metrics')" :key="t.id">
+          <button type="button" @click="view = t.id" class="hit px-3 text-[13px] border"
+            :class="view === t.id ? 'border-accent bg-accent/15 text-ink font-semibold' : 'border-rule text-mute hover:text-ink'">
+            <span x-text="t.label"></span>
+          </button>
+        </template>
+      </div>
+      <div class="border border-dashed border-rule border-l-2 border-l-warn bg-paper p-2">
+        <button type="button" @click="view = 'metrics'" class="hit px-3 text-[13px] border"
+          :class="view === 'metrics' ? 'border-accent bg-accent/15 text-ink font-semibold' : 'border-rule text-mute hover:text-ink'">
+          Сравнение до и после
+        </button>
+      </div>
+    </div>
+
+    <!-- Cohort + KPI chrome -->
+    <div class="mb-4 border border-dashed border-rule border-l-2 border-l-warn bg-paper p-2">
+      <div class="mb-2 px-1 text-[12px] text-mute">
+        <span class="font-semibold text-ink">Покупатели</span>
+        <span class="mx-1">·</span>
+        доля заказов · зачем приходят · где уходят · чек
+        <div class="mt-1 text-[12px] text-warn">Разбор покупателей — для Вас. На сайте у клиентов этого блока не будет.</div>
+      </div>
+      <div class="grid gap-1 sm:grid-cols-3">
+        <template x-for="c in cohorts" :key="c.id">
+          <button type="button" @click="cohort = c.id" class="hit flex flex-col justify-center gap-1 border px-3 py-2 text-left"
+            :class="cohort === c.id ? 'border-ink bg-ink text-surface' : 'border-rule bg-surface text-ink hover:border-ink'">
+            <span class="text-[13px] font-medium" x-text="c.label"></span>
+            <span class="flex items-center gap-2">
+              <span class="h-1.5 min-w-0 flex-1 overflow-hidden"
+                :class="cohort === c.id ? 'bg-surface/25' : 'bg-rule/60'">
+                <span class="block h-full"
+                  :class="cohort === c.id ? 'bg-accent' : 'bg-ink'"
+                  :style="'width:' + c.sharePct + '%'"></span>
+              </span>
+              <span class="mono shrink-0 text-[11px] opacity-70" x-text="c.share + ' заказов'"></span>
+            </span>
+          </button>
+        </template>
+      </div>
+      <div class="mt-2 grid gap-2 sm:grid-cols-3" x-show="view === 'home'">
+        <div class="border border-rule border-l-2 border-l-ok bg-surface row-pad">
+          <div class="text-[12px] text-mute">Зачем</div>
+          <div class="mt-1 text-[15px] font-semibold leading-[22px]" x-text="activeCohort().kpi"></div>
+        </div>
+        <div class="border border-rule border-l-2 border-l-fail bg-surface row-pad">
+          <div class="text-[12px] text-mute">Уходят</div>
+          <div class="mt-1 text-[15px] leading-[22px]" x-text="activeCohort().dropoff"></div>
+        </div>
+        <div class="border border-rule bg-surface row-pad">
+          <div class="text-[12px] text-mute">Чек</div>
+          <div class="mt-1 mono text-[22px] font-bold leading-7" x-text="activeCohort().aov"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== VIEW: HOME ========== -->
+    <section x-show="view === 'home'" x-transition.opacity>
+      <h1 class="mb-1 text-[28px] font-semibold leading-[34px]">Подбор OEM · Mercedes-Benz</h1>
+      <p class="mb-4 text-[15px] leading-[22px] text-mute">Поиск / VIN / корзина — до любых новостей. Карточка на каждом артикуле.</p>
+
+      <!-- 6-step job wizard -->
+      <div class="mb-6 border border-rule bg-surface">
+        <div class="border-b border-rule row-pad flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-[20px] font-semibold leading-7">Быстрый подбор запчастей по шагам</h2>
+          <span class="mono text-[12px] text-mute">шаг <span x-text="jobStep"></span>/6</span>
+        </div>
+        <div class="flex overflow-x-auto border-b border-rule">
+          <template x-for="(s, i) in jobSteps" :key="s">
+            <button type="button" @click="jobStep = i + 1" class="hit shrink-0 border-r border-rule px-3 text-[12px]"
+              :class="jobStep === i + 1 ? 'bg-ink text-surface' : jobStep > i + 1 ? 'bg-ok/10 text-ok' : 'text-mute'">
+              <span class="mono" x-text="(i + 1) + '.'"></span>
+              <span x-text="s"></span>
+            </button>
+          </template>
+        </div>
+
+        <div class="row-pad">
+          <!-- Step 1 Vehicle -->
+          <div x-show="jobStep === 1" class="grid gap-3 md:grid-cols-3">
+            <div>
+              <label class="mb-1 block text-[12px] text-mute">Шасси</label>
+              <select x-model="vehicle.chassis" class="hit w-full border border-rule bg-paper px-3 text-[15px]">
+                <option value="">— выбрать —</option>
+                <option value="W205">C class W205</option>
+                <option value="W213">E class W213</option>
+                <option value="W221">S class W221</option>
+                <option value="V167">GLE class V167</option>
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-[12px] text-mute">Двигатель (обязателен до списка фильтров)</label>
+              <select x-model="vehicle.engine" :disabled="!vehicle.chassis" class="hit w-full border border-rule bg-paper px-3 text-[15px] disabled:opacity-40">
+                <option value="">— выбрать —</option>
+                <template x-for="e in enginesForChassis()" :key="e">
+                  <option :value="e" x-text="e"></option>
+                </template>
+              </select>
+            </div>
+            <div>
+              <label class="mb-1 block text-[12px] text-mute">Год</label>
+              <select x-model="vehicle.year" class="hit w-full border border-rule bg-paper px-3 text-[15px]">
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+              </select>
+            </div>
+            <div class="md:col-span-3 flex flex-wrap gap-2">
+              <button type="button" @click="jobStep = 2" :disabled="!vehicle.chassis || !vehicle.engine"
+                class="hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink disabled:opacity-40 hover:brightness-95">
+                Далее к категории
+              </button>
+              <span class="flex items-center text-[12px] text-mute" x-show="vehicle.chassis && !vehicle.engine">двигатель обязателен — без него список не покажем</span>
+            </div>
+          </div>
+
+          <!-- Step 2 Job -->
+          <div x-show="jobStep === 2">
+            <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              <template x-for="j in jobs" :key="j.id">
+                <button type="button" @click="selectJob(j.id)" class="hit border row-pad text-left text-[15px]"
+                  :class="selectedJob === j.id ? 'border-ink bg-ink text-surface' : 'border-rule hover:border-ink'">
+                  <div class="font-semibold" x-text="j.title"></div>
+                  <div class="mt-1 text-[12px] opacity-70" x-text="j.hint"></div>
+                </button>
+              </template>
+            </div>
+            <button type="button" @click="jobStep = 3" :disabled="!selectedJob"
+              class="mt-3 hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink disabled:opacity-40">Далее · Артикул</button>
+          </div>
+
+          <!-- Step 3 Article -->
+          <div x-show="jobStep === 3">
+            <template x-if="resolvedArticle()">
+              <div class="border border-rule">
+                <div class="row-pad flex flex-wrap items-start justify-between gap-3 border-b border-rule">
+                  <div>
+                    <div class="text-[12px] text-mute">текущий номер</div>
+                    <div class="mono text-[22px] font-bold" x-text="resolvedArticle().sku"></div>
+                    <div class="mt-1 text-[15px]" x-text="resolvedArticle().name"></div>
+                  </div>
+                  <div class="text-right">
+                    <span class="inline-flex min-h-touch items-center border px-3 text-[12px] font-medium"
+                      :class="resolvedArticle().fit === 'confirmed' ? 'border-ok text-ok' : resolvedArticle().fit === 'conditional' ? 'border-warn text-warn' : 'border-fail text-fail'"
+                      x-text="fitLabel(resolvedArticle().fit)"></span>
+                  </div>
+                </div>
+                <div class="row-pad text-[13px] text-mute mono" x-show="resolvedArticle().supersession" x-text="'Официальная замена OEM · ' + resolvedArticle().sku + ' (искали ' + resolvedArticle().supersession + ')'"></div>
+                <button type="button" @click="openProduct(resolvedArticle().id); jobStep = 4" class="m-3 hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink">Открыть карточку детали</button>
+              </div>
+            </template>
+            <template x-if="!resolvedArticle()">
+              <p class="text-[15px] text-mute">Выберите категорию на шаге 2.</p>
+            </template>
+          </div>
+
+          <!-- Steps 4-6 redirect to PDP / cart -->
+          <div x-show="jobStep >= 4">
+            <p class="mb-3 text-[15px]">Варианты, склад и карточка детали — на следующем экране.</p>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" @click="view = 'pdp'; openProduct(resolvedArticle() ? resolvedArticle().id : 'filter')" class="hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink">Открыть карточку детали</button>
+              <button type="button" @click="jobStep = 1" class="hit border border-rule px-5 text-[13px] hover:border-ink">Начать сначала</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-stock service basket -->
+      <h2 class="mb-2 text-[20px] font-semibold leading-7">Витрина · в наличии, Москва</h2>
+      <div class="mb-2 overflow-x-auto border border-rule bg-surface">
+        <table class="w-full min-w-[720px] text-left text-[13px]">
+          <thead class="border-b border-rule bg-paper text-[12px] text-mute">
+            <tr>
+              <th class="row-pad font-medium">артикул OEM</th>
+              <th class="row-pad font-medium">наименование</th>
+              <th class="row-pad font-medium">применимость</th>
+              <th class="row-pad font-medium">сток</th>
+              <th class="row-pad font-medium text-right">цена с НДС</th>
+              <th class="row-pad font-medium"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="p in serviceBasket()" :key="p.id">
+              <tr class="border-b border-rule hover:bg-paper/80">
+                <td class="row-pad mono font-medium" x-text="p.sku"></td>
+                <td class="row-pad" x-text="p.name"></td>
+                <td class="row-pad">
+                  <span class="text-ok" x-text="fitLabel(p.fit)"></span>
+                </td>
+                <td class="row-pad text-ok text-[12px]">в наличии, Москва</td>
+                <td class="row-pad mono text-right font-semibold" x-text="formatMoney(tierPrice(p)) + ' ₽'"></td>
+                <td class="row-pad">
+                  <div class="flex gap-1">
+                    <button type="button" @click="openProduct(p.id)" class="hit border border-rule px-3 text-[12px] hover:border-ink">Карточка</button>
+                    <button type="button" @click="addToCart(p.id)" class="hit border border-accent bg-accent px-3 text-[12px] font-semibold text-ink hover:brightness-95">Купить</button>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+      <p class="mb-6 text-[12px] text-mute">МКАД 500 ₽ · возврат при несовпадении VIN с карточкой · отгрузка в день заказа до 16:00</p>
+
+      <!-- Quick disks CTA for cohort B -->
+      <div class="border border-rule bg-surface row-pad flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="text-[15px] font-semibold">Комплект дисков · A16740186007X21</div>
+          <div class="mono text-[12px] text-mute">11.5J×23 ET47 · ось: зад · пара A16740185007X21 · X167</div>
+        </div>
+        <button type="button" @click="openProduct('wheel'); view = 'pdp'" class="hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink">Открыть карточку детали</button>
+      </div>
+    </section>
+
+    <!-- ========== VIEW: CATALOG ========== -->
+    <section x-show="view === 'catalog'" x-transition.opacity>
+      <div class="mb-3 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 class="text-[28px] font-semibold leading-[34px]">Каталог</h1>
+          <p class="text-[15px] text-mute">Фильтр по категории и наличию.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <select x-model="catalogFilter" class="hit border border-rule bg-surface px-3 text-[13px]">
+            <option value="all">все позиции</option>
+            <option value="service">витрина</option>
+            <option value="wheel">диски</option>
+            <option value="stock">только в наличии</option>
+          </select>
+          <input type="search" x-model="catalogQuery" placeholder="поиск по артикулу / названию"
+            class="hit w-56 border border-rule bg-surface px-3 text-[13px] placeholder:text-mute" />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <template x-for="p in filteredCatalog()" :key="p.id">
+          <article class="border border-rule bg-surface">
+            <div class="product-media aspect-[4/3] border-b border-rule">
+              <button type="button" class="product-media-btn hit" @click="openLightbox(p.image, p.name)" :aria-label="'Увеличить · ' + p.name">
+                <img :src="p.image" :alt="p.name" width="480" height="360" loading="lazy" />
+              </button>
+            </div>
+            <div class="row-pad border-b border-rule flex justify-between gap-2">
+              <div>
+                <div class="mono text-[15px] font-semibold" x-text="p.sku"></div>
+                <div class="text-[13px]" x-text="p.name"></div>
+              </div>
+              <span class="self-start border px-2 py-1 text-[11px] font-medium"
+                :class="p.stock === 'moscow' ? 'border-ok text-ok' : 'border-warn text-warn'"
+                x-text="p.stock === 'moscow' ? 'в наличии, Москва' : p.sourceLabel"></span>
+            </div>
+            <div class="row-pad flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <div class="mono text-[22px] font-bold leading-7" x-text="formatMoney(tierPrice(p)) + ' ₽'"></div>
+                <div class="text-[12px] text-mute" x-text="p.unit === 'set4' ? 'комплект 4 · с НДС' : 'шт · с НДС'"></div>
+              </div>
+              <div class="flex gap-1">
+                <button type="button" @click="openProduct(p.id)" class="hit border border-rule px-3 text-[12px] hover:border-ink">Карточка</button>
+                <button type="button" @click="addToCart(p.id)" class="hit border border-accent bg-accent px-3 text-[12px] font-semibold text-ink">Купить</button>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <p class="mt-3 text-[12px] text-mute" x-show="filteredCatalog().length === 0">Нет позиций по фильтру.</p>
+    </section>
+
+    <!-- ========== VIEW: PDP / DATA SHIELD ========== -->
+    <section x-show="view === 'pdp'" x-transition.opacity>
+      <button type="button" @click="view = 'catalog'" class="mb-3 hit inline-flex items-center gap-2 text-[13px] text-mute hover:text-ink">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Каталог
+      </button>
+
+      <template x-if="product">
+        <div class="grid gap-4 lg:grid-cols-12">
+          <!-- Left: identity + specs always open -->
+          <div class="lg:col-span-7 space-y-3">
+            <div class="product-media aspect-square border border-rule">
+              <button type="button" class="product-media-btn hit" @click="openLightbox(product.image, product.name)" :aria-label="'Увеличить · ' + product.name">
+                <img :src="product.image" :alt="product.name" width="800" height="800" />
+              </button>
+            </div>
+            <div class="border border-rule bg-surface">
+              <div class="row-pad border-b border-rule">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="border px-2 py-1 text-[12px] font-medium"
+                    :class="product.fit === 'confirmed' ? 'border-ok text-ok' : product.fit === 'conditional' ? 'border-warn text-warn' : 'border-fail text-fail'"
+                    x-text="fitLabel(product.fit)"></span>
+                  <span class="text-[12px] text-mute" x-show="product.fitNote" x-text="product.fitNote"></span>
+                  <span class="ml-auto text-[12px] text-mute">независимый специалист OEM</span>
+                </div>
+                <h1 class="mt-2 text-[28px] font-semibold leading-[34px]" x-text="product.name"></h1>
+                <div class="mt-1 mono text-[15px]">
+                  текущий номер · <span class="font-semibold" x-text="product.sku"></span>
+                  <span x-show="product.brand"> · <span x-text="product.brand"></span></span>
+                </div>
+                <div class="mt-1 text-[12px] text-warn mono" x-show="product.supersession" x-text="'искали ' + product.supersession + ' · Официальная замена OEM ' + product.sku"></div>
+              </div>
+
+              <!-- Spec row always open -->
+              <dl class="grid grid-cols-2 gap-0 text-[13px] sm:grid-cols-3">
+                <template x-for="row in product.specs" :key="row.k">
+                  <div class="border-t border-rule row-pad">
+                    <dt class="text-[12px] text-mute" x-text="row.k"></dt>
+                    <dd class="mono font-medium" x-text="row.v"></dd>
+                  </div>
+                </template>
+              </dl>
+            </div>
+
+            <!-- Source rows: named only -->
+            <div class="border border-rule bg-surface">
+              <div class="row-pad border-b border-rule text-[12px] font-medium text-mute">источник · срок · цена (две цены только с указанием склада)</div>
+              <template x-for="(src, idx) in product.sources" :key="src.id">
+                <button type="button" @click="selectedSource = src.id"
+                  class="flex w-full flex-wrap items-center gap-3 border-b border-rule row-pad text-left hover:bg-paper"
+                  :class="selectedSource === src.id ? 'bg-paper ring-1 ring-inset ring-ink' : ''">
+                  <span class="flex h-5 w-5 items-center justify-center border border-ink" :class="selectedSource === src.id ? 'bg-ink' : 'bg-surface'">
+                    <span x-show="selectedSource === src.id" class="h-2 w-2 bg-surface"></span>
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <div class="text-[15px] font-semibold" x-text="src.warehouse"></div>
+                    <div class="mono text-[12px] text-mute">
+                      поставка <span x-text="src.date"></span>
+                      <span x-show="src.cutoff"> · отгрузка до <span x-text="src.cutoff"></span></span>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="mono text-[22px] font-bold leading-7" x-text="formatMoney(tierPrice(product, src.unitPrice)) + ' ₽'"></div>
+                    <div class="text-[12px] text-mute" x-text="product.unit === 'set4' ? 'шт · комплект ниже' : 'шт · с НДС'"></div>
+                  </div>
+                </button>
+              </template>
+            </div>
+
+            <div class="border border-rule bg-surface row-pad text-[13px] leading-[22px] text-mute">
+              возврат при несовпадении VIN с карточкой · МКАД 500 ₽ · документ к артикулу доступен в счёте
+            </div>
+          </div>
+
+          <!-- Right: sticky Decision Node -->
+          <aside class="lg:col-span-5">
+            <div class="sticky-node border border-ink bg-surface">
+              <div class="bg-ink row-pad text-surface">
+                <div class="text-[12px] text-rule">Параметры детали</div>
+                <div class="mono text-[15px] font-semibold" x-text="product.sku"></div>
+              </div>
+
+              <div class="row-pad space-y-3 border-b border-rule">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-[12px] text-mute">сток / источник</span>
+                  <span class="text-[13px] font-medium" :class="activeSource().stockClass" x-text="activeSource().stockText"></span>
+                </div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-[12px] text-mute">срок</span>
+                  <span class="mono text-[13px] font-medium" x-text="activeSource().date"></span>
+                </div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-[12px] text-mute">VIN</span>
+                  <span class="text-[13px]" :class="vinState === 'ok' ? 'text-ok' : 'text-mute'" x-text="vinState === 'ok' ? vinLabel : 'не проверен'"></span>
+                </div>
+
+                <!-- Qty / set builder -->
+                <div>
+                  <div class="mb-1 flex items-center justify-between text-[12px] text-mute">
+                    <span>количество</span>
+                    <span x-show="product.unit === 'set4'">старт 4 (или 2+2)</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" @click="qty = Math.max(product.minQty, qty - (product.step || 1))" class="hit w-12 border border-rule text-[18px] hover:border-ink">−</button>
+                    <input type="number" x-model.number="qty" :min="product.minQty" :step="product.step || 1"
+                      class="hit w-20 border border-rule bg-paper text-center mono text-[18px] font-semibold" />
+                    <button type="button" @click="qty = qty + (product.step || 1)" class="hit w-12 border border-rule text-[18px] hover:border-ink">+</button>
+                    <template x-if="product.unit === 'set4'">
+                      <div class="flex gap-1">
+                        <button type="button" @click="qty = 4" class="hit border px-3 text-[12px]" :class="qty === 4 ? 'border-ink bg-ink text-surface' : 'border-rule'">×4</button>
+                        <button type="button" @click="qty = 2; pairMode = true" class="hit border px-3 text-[12px]" :class="qty === 2 ? 'border-ink bg-ink text-surface' : 'border-rule'">2+2</button>
+                      </div>
+                    </template>
+                  </div>
+                  <p class="mt-2 text-[12px] text-mute" x-show="pairMode && product.pairSku">пара <span class="mono" x-text="product.pairSku"></span> добавляется в корзину автоматически</p>
+                </div>
+
+                <!-- Price block -->
+                <div class="border border-rule bg-paper row-pad">
+                  <div class="flex justify-between text-[12px] text-mute">
+                    <span x-text="formatMoney(tierPrice(product, activeSource().unitPrice)) + ' ₽/шт'"></span>
+                    <span x-text="priceTier === 'fleet' ? 'цена автопарка · уровень 1 · с НДС' : 'розница · с НДС'"></span>
+                  </div>
+                  <div class="mt-1 flex items-baseline justify-between gap-2">
+                    <span class="text-[12px] text-mute">итого</span>
+                    <span class="mono text-[22px] font-bold leading-7" x-text="formatMoney(lineTotal()) + ' ₽'"></span>
+                  </div>
+                  <div class="mt-1 text-[12px] text-mute" x-show="product.unit === 'set4' && qty >= 4">
+                    комплект <span x-text="qty"></span> = <span class="mono" x-text="formatMoney(lineTotal())"></span> ₽ с НДС
+                  </div>
+                  <div class="mt-2 flex items-center gap-2">
+                    <label class="hit inline-flex cursor-pointer items-center gap-2 text-[13px]">
+                      <input type="checkbox" x-model="priceTier" true-value="fleet" false-value="retail" class="h-5 w-5 accent-[#C4A35A]" />
+                      цена автопарка · уровень 1 (−8%)
+                    </label>
+                  </div>
+                </div>
+
+                <div class="grid gap-2">
+                  <button type="button" @click="buyNow()" class="hit w-full border border-accent bg-accent text-[15px] font-semibold text-ink hover:brightness-95">
+                    Купить
+                  </button>
+                  <button type="button" @click="openInvoice = true" class="hit w-full border border-ink bg-ink text-[15px] font-semibold text-surface hover:bg-[#1f2328]">
+                    Счёт для юрлица
+                  </button>
+                </div>
+              </div>
+
+              <div class="row-pad space-y-2 border-t border-rule">
+                <div class="text-[12px] text-mute">Уточнить применимость</div>
+                <div class="grid grid-cols-3 gap-1">
+                  <a :href="messengerHref('whatsapp')" target="_blank" rel="noopener noreferrer"
+                     class="hit inline-flex flex-col items-center justify-center gap-1 border border-rule px-1 text-[11px] text-ink hover:border-ink">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    WhatsApp
+                  </a>
+                  <a :href="messengerHref('telegram')" target="_blank" rel="noopener noreferrer"
+                     class="hit inline-flex flex-col items-center justify-center gap-1 border border-rule px-1 text-[11px] text-ink hover:border-ink">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    Telegram
+                  </a>
+                  <a :href="messengerHref('max')" target="_blank" rel="noopener noreferrer"
+                     class="hit inline-flex flex-col items-center justify-center gap-1 border border-rule px-1 text-[11px] text-ink hover:border-ink">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" transform="translate(-3.165 -3.622) scale(0.030308)" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z"/></svg>
+                    Max
+                  </a>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </template>
+    </section>
+
+    <!-- ========== VIEW: FLEET CABINET ========== -->
+    <section x-show="view === 'cabinet'" x-transition.opacity>
+      <h1 class="mb-1 text-[28px] font-semibold leading-[34px]">Кабинет · СТО / автопарки</h1>
+      <p class="mb-4 text-[15px] text-mute">Юрлицо · НДС · уровень · сохранённые VIN · последние корзины</p>
+
+      <div class="mb-4 grid gap-3 md:grid-cols-3">
+        <div class="border border-rule bg-surface row-pad">
+          <div class="text-[12px] text-mute">организация</div>
+          <div class="text-[15px] font-semibold">ООО «Северный сервис»</div>
+          <div class="mono text-[12px] text-mute">ИНН 7701234567 · НДС</div>
+        </div>
+        <div class="border border-rule bg-surface row-pad">
+          <div class="text-[12px] text-mute">цена автопарка</div>
+          <div class="mono text-[22px] font-bold text-ok">уровень 1</div>
+          <div class="text-[12px] text-mute">−8% в счёте</div>
+        </div>
+        <div class="border border-rule bg-surface row-pad">
+          <div class="text-[12px] text-mute">повторные заказы за 90 дней</div>
+          <div class="mono text-[22px] font-bold">3 автомобиля</div>
+        </div>
+      </div>
+
+      <h2 class="mb-2 text-[20px] font-semibold">Сохранённые VIN</h2>
+      <div class="mb-4 overflow-x-auto border border-rule bg-surface">
+        <table class="w-full min-w-[640px] text-[13px]">
+          <thead class="border-b border-rule bg-paper text-[12px] text-mute">
+            <tr>
+              <th class="row-pad text-left font-medium">VIN</th>
+              <th class="row-pad text-left font-medium">шасси · двигатель</th>
+              <th class="row-pad text-left font-medium">последняя работа</th>
+              <th class="row-pad"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="v in savedVins" :key="v.vin">
+              <tr class="border-b border-rule">
+                <td class="row-pad mono font-medium" x-text="v.vin"></td>
+                <td class="row-pad" x-text="v.meta"></td>
+                <td class="row-pad text-mute" x-text="v.lastJob"></td>
+                <td class="row-pad">
+                  <button type="button" @click="loadVin(v)" class="hit border border-rule px-3 text-[12px] hover:border-ink">Загрузить</button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="mb-2 text-[20px] font-semibold">Последняя корзина</h2>
+      <div class="border border-rule bg-surface row-pad flex flex-wrap items-center justify-between gap-3">
+        <div class="mono text-[13px]" x-text="lastBasketLabel()"></div>
+        <button type="button" @click="restoreLastBasket()" class="hit border border-accent bg-accent px-5 text-[13px] font-semibold text-ink">Повторить заказ</button>
+      </div>
+    </section>
+
+    <!-- ========== VIEW: METRICS (demo audit) ========== -->
+    <section x-show="view === 'metrics'" x-transition.opacity>
+      <div class="border border-dashed border-rule border-l-2 border-l-warn bg-paper p-2">
+        <div class="mb-2 px-1 text-[12px] text-mute">
+          <span class="font-semibold text-ink">Сравнение сайта · до и после</span>
+          <span class="mx-1">·</span>
+          текущий сайт и этот интерфейс
+          <div class="mt-1 text-[12px] text-warn">Сравнение сайта — для Вас. На сайте у клиентов этого экрана не будет.</div>
+        </div>
+
+        <p class="mb-3 px-1 text-[15px] text-mute">Насколько проще найти деталь и оформить заказ: текущий сайт и этот интерфейс</p>
+
+        <div class="mb-4 grid gap-3 md:grid-cols-2">
+          <div class="border border-fail/40 bg-surface">
+            <div class="row-pad border-b border-rule flex justify-between">
+              <span class="font-semibold">Текущий magazinmercedes.ru</span>
+              <span class="mono text-[22px] font-bold text-fail">3,5 / 90</span>
+            </div>
+            <ul class="divide-y divide-rule text-[13px]">
+              <li class="row-pad flex justify-between"><span>мотивация купить</span><span class="mono">4,5</span></li>
+              <li class="row-pad flex justify-between"><span>понятность цены</span><span class="mono">3,5</span></li>
+              <li class="row-pad flex justify-between"><span>наличие и скидка</span><span class="mono">4,0</span></li>
+              <li class="row-pad flex justify-between"><span>лишние шаги</span><span class="mono text-fail">8,5</span></li>
+              <li class="row-pad flex justify-between"><span>сомнение перед оплатой</span><span class="mono text-fail">8,0</span></li>
+            </ul>
+          </div>
+          <div class="border border-ok/40 bg-surface">
+            <div class="row-pad border-b border-rule flex justify-between">
+              <span class="font-semibold">Новый интерфейс</span>
+              <span class="mono text-[22px] font-bold text-ok" x-text="demoScore().toFixed(1).replace('.', ',') + ' / 90'"></span>
+            </div>
+            <ul class="divide-y divide-rule text-[13px]">
+              <li class="row-pad flex justify-between"><span>поиск и VIN сразу</span><span class="mono">7,5</span></li>
+              <li class="row-pad flex justify-between"><span>карточка у цены</span><span class="mono">8,0</span></li>
+              <li class="row-pad flex justify-between"><span>наличие и цена автопарка на карточке</span><span class="mono">7,5</span></li>
+              <li class="row-pad flex justify-between"><span>один склад и один срок</span><span class="mono text-ok">3,0</span></li>
+              <li class="row-pad flex justify-between"><span>VIN, НДС и МКАД 500</span><span class="mono text-ok">3,0</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="mb-2 px-1 text-[20px] font-semibold">Где теряются заказы</h2>
+        <ol class="border border-rule bg-surface divide-y divide-rule text-[13px]">
+          <template x-for="(leak, i) in leaks" :key="i">
+            <li class="row-pad flex gap-3">
+              <span class="mono text-mute" x-text="(i + 1) + '.'"></span>
+              <span x-text="leak"></span>
+            </li>
+          </template>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- IMAGE LIGHTBOX -->
+  <div x-show="lightbox" x-cloak class="fixed inset-0 z-[60]" x-transition.opacity
+       @keydown.escape.window="lightbox && closeLightbox()">
+    <div class="absolute inset-0 bg-ink/85" @click="closeLightbox()"></div>
+    <div class="relative z-10 flex h-full flex-col pointer-events-none">
+      <div class="pointer-events-auto flex min-h-touch items-center justify-between gap-2 border-b border-rule/30 px-4 py-2 text-surface">
+        <div class="min-w-0 truncate text-[13px]" x-text="lightbox ? lightbox.alt : ''"></div>
+        <div class="flex shrink-0 items-center gap-1">
+          <button type="button" class="hit border border-rule/40 px-3 text-[13px] hover:border-accent hover:text-accent" @click="lightboxZoomOut()" aria-label="Уменьшить">−</button>
+          <span class="mono w-12 text-center text-[12px]" x-text="Math.round(lightboxZoom * 100) + '%'"></span>
+          <button type="button" class="hit border border-rule/40 px-3 text-[13px] hover:border-accent hover:text-accent" @click="lightboxZoomIn()" aria-label="Увеличить">+</button>
+          <button type="button" class="hit border border-rule/40 px-3 text-[13px] hover:border-accent hover:text-accent" @click="lightboxResetZoom()" aria-label="Сброс">1:1</button>
+          <button type="button" class="hit w-12 text-[22px] hover:text-accent" @click="closeLightbox()" aria-label="Закрыть">×</button>
+        </div>
+      </div>
+      <div class="lightbox-stage pointer-events-auto flex flex-1 items-center justify-center overflow-hidden p-3"
+           @click="closeLightbox()"
+           @wheel.prevent="lightboxWheel($event)">
+        <img x-show="lightbox" :src="lightbox && lightbox.src" :alt="lightbox && lightbox.alt"
+             :class="lightboxZoom > 1 ? 'is-zoomed' : ''"
+             :style="'transform: translate(' + lightboxPan.x + 'px,' + lightboxPan.y + 'px) scale(' + lightboxZoom + ')'"
+             @click.stop
+             @dblclick.stop.prevent="lightboxToggleZoom()"
+             @pointerdown.stop="lightboxPointerDown($event)"
+             @pointermove.stop="lightboxPointerMove($event)"
+             @pointerup.stop="lightboxPointerUp($event)"
+             @pointercancel.stop="lightboxPointerUp($event)"
+             draggable="false" />
+      </div>
+      <p class="pointer-events-none pb-3 text-center text-[12px] text-rule">клик вне фото — закрыть · двойной клик по фото — масштаб / сброс</p>
+    </div>
+  </div>
+
+  <!-- CART SLIDE-OVER -->
+  <div x-show="openCart" class="fixed inset-0 z-50" x-transition.opacity>
+    <div class="absolute inset-0 bg-ink/50" @click="openCart = false"></div>
+    <aside class="absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-rule bg-surface shadow-xl"
+           x-show="openCart" x-transition:enter="transition transform ease-out duration-200"
+           x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0">
+      <div class="flex min-h-touch items-center justify-between border-b border-rule bg-ink px-4 text-surface">
+        <h2 class="text-[20px] font-semibold">Корзина</h2>
+        <button type="button" @click="openCart = false" class="hit w-12 text-[20px] hover:text-accent" aria-label="Закрыть">×</button>
+      </div>
+      <div class="flex-1 overflow-y-auto">
+        <template x-if="cart.length === 0">
+          <p class="row-pad text-[15px] text-mute">Корзина пуста.</p>
+        </template>
+        <template x-for="(line, idx) in cart" :key="line.key">
+          <div class="border-b border-rule row-pad">
+            <div class="flex justify-between gap-2">
+              <div>
+                <div class="mono text-[13px] font-semibold" x-text="line.sku"></div>
+                <div class="text-[13px]" x-text="line.name"></div>
+                <div class="text-[12px] text-mute" x-text="line.source"></div>
+              </div>
+              <button type="button" @click="removeLine(idx)" class="hit text-[12px] text-fail hover:underline">удалить</button>
+            </div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex items-center gap-1">
+                <button type="button" @click="line.qty = Math.max(1, line.qty - 1); persistCart()" class="hit w-10 border border-rule">−</button>
+                <span class="mono w-8 text-center" x-text="line.qty"></span>
+                <button type="button" @click="line.qty++; persistCart()" class="hit w-10 border border-rule">+</button>
+              </div>
+              <span class="mono font-semibold" x-text="formatMoney(line.unitPrice * line.qty) + ' ₽'"></span>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="border-t border-rule bg-paper p-4 space-y-2">
+        <div class="flex justify-between text-[13px] text-mute">
+          <span>МКАД</span>
+          <span class="mono" x-text="cart.length ? '500 ₽' : '0 ₽'"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-[15px] font-semibold">итого с НДС</span>
+          <span class="mono text-[22px] font-bold" x-text="formatMoney(cartTotal() + (cart.length ? 500 : 0)) + ' ₽'"></span>
+        </div>
+        <button type="button" @click="checkout()" :disabled="!cart.length"
+          class="hit w-full border border-accent bg-accent text-[15px] font-semibold text-ink disabled:opacity-40">Оформить</button>
+        <button type="button" @click="openInvoice = true; openCart = false" :disabled="!cart.length"
+          class="hit w-full border border-ink text-[15px] font-semibold disabled:opacity-40">Счёт для юрлица</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- INVOICE MODAL -->
+  <div x-show="openInvoice" class="fixed inset-0 z-[60] flex items-center justify-center p-4" x-transition.opacity>
+    <div class="absolute inset-0 bg-ink/50" @click="openInvoice = false"></div>
+    <div class="relative w-full max-w-lg border border-rule bg-surface" @click.stop>
+      <div class="flex min-h-touch items-center justify-between border-b border-rule bg-ink px-4 text-surface">
+        <h2 class="text-[20px] font-semibold">Счёт для юрлица</h2>
+        <button type="button" @click="openInvoice = false" class="hit w-12 text-[20px]">×</button>
+      </div>
+      <div class="row-pad space-y-3">
+        <div>
+          <label class="mb-1 block text-[12px] text-mute">ИНН</label>
+          <input type="text" x-model="invoice.inn" class="hit w-full border border-rule bg-paper px-3 mono text-[15px]" placeholder="7701234567" />
+        </div>
+        <div>
+          <label class="mb-1 block text-[12px] text-mute">организация</label>
+          <input type="text" x-model="invoice.org" class="hit w-full border border-rule bg-paper px-3 text-[15px]" placeholder="ООО «…»" />
+        </div>
+        <div class="border border-rule bg-paper row-pad text-[13px]">
+          <div class="text-mute">строки счёта = артикулы на экране</div>
+          <template x-for="line in (cart.length ? cart : previewLine())" :key="line.key || line.sku">
+            <div class="mt-1 flex justify-between mono">
+              <span x-text="line.sku + ' × ' + line.qty"></span>
+              <span x-text="formatMoney(line.unitPrice * line.qty) + ' ₽'"></span>
+            </div>
+          </template>
+        </div>
+        <label class="hit flex items-center gap-2 text-[13px]">
+          <input type="checkbox" x-model="invoice.vat" class="h-5 w-5 accent-[#C4A35A]" />
+          с НДС · цена автопарка уровень 1
+        </label>
+        <button type="button" @click="submitInvoice()" class="hit w-full border border-accent bg-accent text-[15px] font-semibold text-ink">Сформировать счёт</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div x-show="toast" x-transition
+       class="fixed bottom-4 left-1/2 z-[70] -translate-x-1/2 border border-ink bg-ink px-4 py-3 text-[13px] text-surface shadow-lg"
+       x-text="toast"></div>
+
+  <script>
+    function epcApp() {
+      const CATALOG = [
+        {
+          id: 'filter',
+          sku: 'A2548174600',
+          name: 'Звезда решётки с подсветкой',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'conditional',
+          fitNote: 'не с DISTRONIC 233/239 · центральная звезда',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 28900,
+          image: 'photos/filter.jpg',
+          supersession: null,
+          specs: [
+            { k: 'узел', v: 'решётка · центральная звезда' },
+            { k: 'SA', v: 'не с DISTRONIC 233/239' },
+            { k: 'цвет', v: 'хром' },
+            { k: 'замен', v: 'замен нет' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 28900, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+        {
+          id: 'plug',
+          sku: 'A2236807800',
+          name: 'Держатель бокалов Maybach (2)',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'confirmed',
+          fitNote: 'Maybach · задний ряд',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 64500,
+          image: 'photos/plug.jpg',
+          supersession: null,
+          specs: [
+            { k: 'узел', v: 'задний ряд' },
+            { k: 'комплект', v: '2 бокала' },
+            { k: 'бренд', v: 'Mercedes-Maybach' },
+            { k: 'замен', v: 'замен нет' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 64500, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+        {
+          id: 'washer',
+          sku: 'A2059053103',
+          name: 'Насадки AMG Performance (пара)',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'conditional',
+          fitNote: 'AMG · пара',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 89000,
+          image: 'photos/washer.jpg',
+          supersession: null,
+          specs: [
+            { k: 'узел', v: 'выпуск' },
+            { k: 'комплект', v: 'пара' },
+            { k: 'материал', v: 'хром' },
+            { k: 'замен', v: 'замен нет' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 89000, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+        {
+          id: 'sump',
+          sku: 'A0009053801',
+          name: 'Камера Night View Assist',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'conditional',
+          fitNote: 'SA Night View',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 142000,
+          image: 'photos/sump.jpg',
+          supersession: null,
+          specs: [
+            { k: 'узел', v: 'Night View Assist' },
+            { k: 'SA', v: 'Night View' },
+            { k: 'бренд', v: 'Mercedes' },
+            { k: 'замен', v: 'замен нет' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 142000, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+        {
+          id: 'air',
+          sku: 'A2139067703',
+          name: 'Фара MULTIBEAM LED (лев.)',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'conditional',
+          fitNote: 'левая · W213',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 218000,
+          image: 'photos/air.jpg',
+          supersession: null,
+          specs: [
+            { k: 'сторона', v: 'левая' },
+            { k: 'шасси', v: 'W213' },
+            { k: 'тип', v: 'MULTIBEAM LED' },
+            { k: 'замен', v: 'замен нет' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 218000, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+        {
+          id: 'wheel',
+          sku: 'A16740186007X21',
+          name: 'Диск кованый AMG 11.5J×23 ET47',
+          brand: 'Mercedes',
+          category: 'wheel',
+          fit: 'conditional',
+          fitNote: 'ось: зад · X167 · шина 325/35 R23',
+          stock: 'order',
+          sourceLabel: 'склад DE / центральный',
+          unit: 'set4',
+          minQty: 2,
+          step: 2,
+          unitPrice: 98400,
+          image: 'photos/wheel.jpg',
+          pairSku: 'A16740185007X21',
+          supersession: null,
+          specs: [
+            { k: 'геометрия', v: '11.5J × 23 ET 47' },
+            { k: 'ось', v: 'зад' },
+            { k: 'цвет', v: 'titanium grey' },
+            { k: 'материал', v: 'алюминий · ковка' },
+            { k: 'пара', v: 'A16740185007X21 · 10J×23 ET45 · перед' },
+            { k: 'шина', v: '325/35 R23' },
+            { k: 'шасси', v: 'X167' },
+          ],
+          sources: [
+            {
+              id: 'central',
+              warehouse: 'склад центральный',
+              date: '2026-10-23',
+              cutoff: null,
+              unitPrice: 98400,
+              stockText: 'центральный · поставка 2026-10-23 · источник: центральный',
+              stockClass: 'text-warn',
+            },
+            {
+              id: 'de',
+              warehouse: 'склад DE (Daimler)',
+              date: '2026-12-02',
+              cutoff: null,
+              unitPrice: 156800,
+              stockText: 'DE · поставка 2026-12-02 · источник: DE',
+              stockClass: 'text-warn',
+            },
+          ],
+        },
+        {
+          id: 'pads',
+          sku: 'A2314211512',
+          name: 'Диск карбон-керамика AMG (перед)',
+          brand: 'Mercedes',
+          category: 'service',
+          fit: 'confirmed',
+          fitNote: 'ось: перед · AMG',
+          stock: 'moscow',
+          sourceLabel: 'в наличии, Москва',
+          unit: 'pcs',
+          minQty: 1,
+          step: 1,
+          unitPrice: 312000,
+          image: 'photos/pads.jpg',
+          supersession: 'A2304211712',
+          specs: [
+            { k: 'ось', v: 'перед' },
+            { k: 'размер', v: '402 × 39' },
+            { k: 'материал', v: 'карбон-керамика' },
+            { k: 'замен', v: 'A2304211712 → A2314211512' },
+          ],
+          sources: [
+            { id: 'msk', warehouse: 'склад Москва', date: '2026-10-19', cutoff: '16:00', unitPrice: 312000, stockText: 'в наличии, Москва · отгрузка до 16:00', stockClass: 'text-ok' },
+          ],
+        },
+      ];
+
+      return {
+        catalog: CATALOG,
+        view: 'home',
+        cohort: 'A',
+        openCart: false,
+        openInvoice: false,
+        openMessengers: false,
+        lightbox: null,
+        lightboxZoom: 1,
+        lightboxPan: { x: 0, y: 0 },
+        lightboxDrag: null,
+        toast: '',
+        messengers: {
+          whatsapp: 'https://wa.me/79167807130',
+          telegram: 'https://t.me/MagazinMercedes2024',
+          max: 'https://max.ru/u/f9LHodD0cOJNQUQKIIcDBnXtd40VK-azpHS3192hbCkeXNe2RRrABQ86TUQ',
+        },
+        searchArticle: '',
+        vinInput: '',
+        vinState: 'idle',
+        vinLabel: '',
+        jobStep: 1,
+        selectedJob: null,
+        vehicle: { chassis: '', engine: '', year: '2019' },
+        product: null,
+        selectedSource: null,
+        qty: 1,
+        pairMode: false,
+        priceTier: 'retail',
+        cart: JSON.parse(localStorage.getItem('epc_cart') || '[]'),
+        catalogFilter: 'all',
+        catalogQuery: '',
+        invoice: { inn: '', org: '', vat: true },
+        lastBasket: JSON.parse(localStorage.getItem('epc_last_basket') || '[]'),
+
+        cohorts: [
+          { id: 'A', label: 'СТО / Автопарки', share: '58%', sharePct: 58, kpi: 'Артикул и Москва сегодня', dropoff: 'Нет двигателя · звонок вместо склада', aov: '26–30 тыс. ₽' },
+          { id: 'B', label: 'Автосервисы / Тюнинг', share: '24%', sharePct: 24, kpi: 'Комплект дисков · без возврата по VIN', dropoff: 'Цена без склада', aov: '100–120 тыс. ₽' },
+          { id: 'C', label: 'Частные клиенты', share: '18%', sharePct: 18, kpi: 'Оригинал по VIN и день доставки', dropoff: 'Рейтинг 0.0 · звонок за звезду', aov: '55–75 тыс. ₽' },
+        ],
+        views: [
+          { id: 'home', label: 'Главная' },
+          { id: 'catalog', label: 'Каталог' },
+          { id: 'pdp', label: 'Карточка детали' },
+          { id: 'cabinet', label: 'Кабинет' },
+          { id: 'metrics', label: 'Сравнение до и после' },
+        ],
+        jobSteps: ['Автомобиль', 'Категория', 'Артикул', 'Варианты и Склад', 'Карточка детали', 'Оформление'],
+        jobs: [
+          { id: 'to', title: 'Звезда', hint: 'подсветка решётки' },
+          { id: 'brakes', title: 'Керамика', hint: 'ось перед · текущий номер' },
+          { id: 'wheels', title: 'Кованый AMG', hint: '×4 / 2+2 · ET · пара' },
+          { id: 'acc', title: 'MULTIBEAM', hint: 'фара · левая' },
+        ],
+        engineMap: {
+          W205: ['OM654', 'M270', 'OM651', 'M276'],
+          W213: ['OM654', 'M256', 'OM656'],
+          W221: ['M273', 'OM642'],
+          V167: ['OM654', 'M256', 'OM656'],
+        },
+        savedVins: [
+          { vin: 'WDD2130041A123456', meta: 'W213 · OM654', lastJob: 'звезда' },
+          { vin: 'WDD2050041A654321', meta: 'W205 · OM654', lastJob: 'керамика' },
+          { vin: 'WDD2210041A998877', meta: 'W221 · M273', lastJob: 'диски AMG 23' },
+        ],
+        leaks: [
+          'Звонок вместо оформления при наличии на складе → клиент не оформляет сам',
+          'Цена дисков без склада → автосервис уходит, чек комплекта = 0',
+          'Список без двигателя → возвраты и уход к конкуренту',
+          'Скидка автопарка только голосом → торг маржи, клиент не закрепляется',
+          'Сначала новости, потом запчасти → сложнее дойти до карточки',
+          'В тексте доставка 300 ₽, в заказе 500 ₽, цена не оферта → сомнение перед оплатой',
+        ],
+
+        serviceBasket() {
+          return this.catalog.filter((p) => ['filter', 'plug', 'washer', 'sump', 'air'].includes(p.id));
+        },
+
+        activeCohort() {
+          return this.cohorts.find((c) => c.id === this.cohort);
+        },
+
+        enginesForChassis() {
+          return this.engineMap[this.vehicle.chassis] || [];
+        },
+
+        fitLabel(fit) {
+          if (fit === 'confirmed') return 'применимость: подтверждена';
+          if (fit === 'conditional') return 'применимость: условная';
+          return 'применимость: нет';
+        },
+
+        formatMoney(n) {
+          return Math.round(n).toLocaleString('ru-RU');
+        },
+
+        tierPrice(product, unitPrice) {
+          const base = unitPrice != null ? unitPrice : product.unitPrice;
+          return this.priceTier === 'fleet' ? Math.round(base * 0.92) : base;
+        },
+
+        selectJob(id) {
+          this.selectedJob = id;
+        },
+
+        resolvedArticle() {
+          if (this.selectedJob === 'to') return this.catalog.find((p) => p.id === 'filter');
+          if (this.selectedJob === 'brakes') return this.catalog.find((p) => p.id === 'pads');
+          if (this.selectedJob === 'wheels') return this.catalog.find((p) => p.id === 'wheel');
+          if (this.selectedJob === 'acc') return this.catalog.find((p) => p.id === 'air');
+          return null;
+        },
+
+        openLightbox(src, alt) {
+          this.lightbox = { src, alt: alt || '' };
+          this.lightboxZoom = 1;
+          this.lightboxPan = { x: 0, y: 0 };
+          this.lightboxDrag = null;
+        },
+
+        closeLightbox() {
+          this.lightbox = null;
+          this.lightboxZoom = 1;
+          this.lightboxPan = { x: 0, y: 0 };
+          this.lightboxDrag = null;
+        },
+
+        lightboxZoomIn() {
+          this.lightboxZoom = Math.min(4, Math.round((this.lightboxZoom + 0.5) * 10) / 10);
+        },
+
+        lightboxZoomOut() {
+          this.lightboxZoom = Math.max(1, Math.round((this.lightboxZoom - 0.5) * 10) / 10);
+          if (this.lightboxZoom === 1) this.lightboxPan = { x: 0, y: 0 };
+        },
+
+        lightboxResetZoom() {
+          this.lightboxZoom = 1;
+          this.lightboxPan = { x: 0, y: 0 };
+          this.lightboxDrag = null;
+        },
+
+        lightboxToggleZoom() {
+          if (this.lightboxZoom > 1) this.lightboxResetZoom();
+          else this.lightboxZoomIn();
+        },
+
+        lightboxWheel(e) {
+          if (e.deltaY < 0) this.lightboxZoomIn();
+          else this.lightboxZoomOut();
+        },
+
+        lightboxPointerDown(e) {
+          if (this.lightboxZoom <= 1) return;
+          if (e.button != null && e.button !== 0) return;
+          this.lightboxDrag = {
+            id: e.pointerId,
+            x: e.clientX,
+            y: e.clientY,
+            panX: this.lightboxPan.x,
+            panY: this.lightboxPan.y,
+            moved: false,
+          };
+          try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+        },
+
+        lightboxPointerMove(e) {
+          if (!this.lightboxDrag || this.lightboxDrag.id !== e.pointerId) return;
+          const dx = e.clientX - this.lightboxDrag.x;
+          const dy = e.clientY - this.lightboxDrag.y;
+          if (Math.abs(dx) + Math.abs(dy) > 3) this.lightboxDrag.moved = true;
+          this.lightboxPan = {
+            x: this.lightboxDrag.panX + dx,
+            y: this.lightboxDrag.panY + dy,
+          };
+        },
+
+        lightboxPointerUp(e) {
+          if (!this.lightboxDrag) return;
+          if (e && this.lightboxDrag.id !== e.pointerId) return;
+          this.lightboxDrag = null;
+        },
+
+        openProduct(id) {
+          const p = this.catalog.find((x) => x.id === id);
+          if (!p) return;
+          this.product = p;
+          this.selectedSource = p.sources[0].id;
+          this.qty = p.minQty;
+          this.pairMode = false;
+          this.view = 'pdp';
+          this.jobStep = Math.max(this.jobStep, 5);
+        },
+
+        activeSource() {
+          if (!this.product) return { date: '—', stockText: '—', stockClass: 'text-mute', unitPrice: 0 };
+          return this.product.sources.find((s) => s.id === this.selectedSource) || this.product.sources[0];
+        },
+
+        lineTotal() {
+          if (!this.product) return 0;
+          return this.tierPrice(this.product, this.activeSource().unitPrice) * this.qty;
+        },
+
+        runArticleSearch() {
+          const q = this.searchArticle.trim().toUpperCase().replace(/\s/g, '');
+          if (!q) {
+            this.showToast('введите артикул OEM');
+            return;
+          }
+          const hit = this.catalog.find((p) => p.sku === q || (p.supersession && p.supersession === q));
+          if (hit) {
+            if (hit.supersession === q) {
+              this.showToast('Официальная замена OEM ' + hit.sku);
+            }
+            this.openProduct(hit.id);
+          } else {
+            this.showToast('артикул не найден в демо-каталоге');
+          }
+        },
+
+        checkVin() {
+          const v = this.vinInput.trim();
+          if (v.length !== 17) {
+            this.vinState = 'fail';
+            this.vinLabel = 'VIN: требуется 17 знаков';
+            return;
+          }
+          if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(v)) {
+            this.vinState = 'fail';
+            this.vinLabel = 'VIN: недопустимые символы';
+            return;
+          }
+          this.vinState = 'ok';
+          if (v.startsWith('WDD213')) {
+            this.vinLabel = 'VIN OK · W213 · OM654';
+            this.vehicle.chassis = 'W213';
+            this.vehicle.engine = 'OM654';
+          } else if (v.startsWith('WDD205')) {
+            this.vinLabel = 'VIN OK · W205 · OM654';
+            this.vehicle.chassis = 'W205';
+            this.vehicle.engine = 'OM654';
+          } else if (v.startsWith('WDD221')) {
+            this.vinLabel = 'VIN OK · W221 · условно для дисков';
+            this.vehicle.chassis = 'W221';
+            this.vehicle.engine = 'M273';
+          } else {
+            this.vinLabel = 'VIN OK · шасси распознано';
+          }
+        },
+
+        loadVin(row) {
+          this.vinInput = row.vin;
+          this.checkVin();
+          this.view = 'home';
+          this.jobStep = 1;
+          this.showToast('VIN загружен · ' + row.meta);
+        },
+
+        filteredCatalog() {
+          let list = this.catalog.slice();
+          if (this.catalogFilter === 'service') list = list.filter((p) => p.category === 'service');
+          if (this.catalogFilter === 'wheel') list = list.filter((p) => p.category === 'wheel');
+          if (this.catalogFilter === 'stock') list = list.filter((p) => p.stock === 'moscow');
+          const q = this.catalogQuery.trim().toUpperCase();
+          if (q) {
+            list = list.filter((p) => p.sku.includes(q) || p.name.toUpperCase().includes(q));
+          }
+          return list;
+        },
+
+        addToCart(id, overrideQty) {
+          const p = this.catalog.find((x) => x.id === id);
+          if (!p) return;
+          const src = p.sources[0];
+          const q = overrideQty != null ? overrideQty : p.minQty;
+          const unitPrice = this.tierPrice(p, src.unitPrice);
+          const key = p.sku + '|' + src.id + '|' + this.priceTier;
+          const existing = this.cart.find((l) => l.key === key);
+          if (existing) {
+            existing.qty += q;
+          } else {
+            this.cart.push({
+              key,
+              id: p.id,
+              sku: p.sku,
+              name: p.name,
+              qty: q,
+              unitPrice,
+              source: src.warehouse + ' · ' + src.date,
+            });
+          }
+          if (p.pairSku && (this.pairMode || q === 2)) {
+            this.showToast('добавлена пара ' + p.pairSku + ' (симметрия оси)');
+          }
+          this.persistCart();
+          this.showToast(p.sku + ' · в корзине');
+        },
+
+        buyNow() {
+          if (!this.product) return;
+          const src = this.activeSource();
+          const unitPrice = this.tierPrice(this.product, src.unitPrice);
+          const key = this.product.sku + '|' + src.id + '|' + this.priceTier;
+          const existing = this.cart.find((l) => l.key === key);
+          if (existing) {
+            existing.qty += this.qty;
+            existing.unitPrice = unitPrice;
+          } else {
+            this.cart.push({
+              key,
+              id: this.product.id,
+              sku: this.product.sku,
+              name: this.product.name,
+              qty: this.qty,
+              unitPrice,
+              source: src.warehouse + ' · ' + src.date,
+            });
+          }
+          if (this.pairMode && this.product.pairSku) {
+            this.cart.push({
+              key: this.product.pairSku + '|' + src.id + '|' + this.priceTier,
+              id: this.product.id + '-pair',
+              sku: this.product.pairSku,
+              name: 'Пара · противоположное колесо',
+              qty: this.qty,
+              unitPrice,
+              source: src.warehouse + ' · ' + src.date,
+            });
+          }
+          this.persistCart();
+          this.jobStep = 6;
+          this.openCart = true;
+          this.showToast('Деталь добавлена в заказ · ' + this.product.sku);
+        },
+
+        cartCount() {
+          return this.cart.reduce((s, l) => s + l.qty, 0);
+        },
+
+        cartTotal() {
+          return this.cart.reduce((s, l) => s + l.unitPrice * l.qty, 0);
+        },
+
+        removeLine(idx) {
+          this.cart.splice(idx, 1);
+          this.persistCart();
+        },
+
+        persistCart() {
+          localStorage.setItem('epc_cart', JSON.stringify(this.cart));
+        },
+
+        checkout() {
+          this.lastBasket = JSON.parse(JSON.stringify(this.cart));
+          localStorage.setItem('epc_last_basket', JSON.stringify(this.lastBasket));
+          this.cart = [];
+          this.persistCart();
+          this.openCart = false;
+          this.showToast('заказ принят · строки счёта = артикулы на экране');
+        },
+
+        previewLine() {
+          if (!this.product) return [];
+          return [{
+            sku: this.product.sku,
+            qty: this.qty,
+            unitPrice: this.tierPrice(this.product, this.activeSource().unitPrice),
+            key: 'preview',
+          }];
+        },
+
+        submitInvoice() {
+          if (!this.invoice.inn || !this.invoice.org) {
+            this.showToast('укажите ИНН и организацию');
+            return;
+          }
+          this.openInvoice = false;
+          this.showToast('счёт сформирован · ' + this.invoice.org + ' · с НДС');
+        },
+
+        lastBasketLabel() {
+          if (!this.lastBasket.length) return 'нет сохранённых корзин';
+          return this.lastBasket.map((l) => l.sku + '×' + l.qty).join(' · ');
+        },
+
+        restoreLastBasket() {
+          if (!this.lastBasket.length) {
+            this.showToast('нет последней корзины');
+            return;
+          }
+          this.cart = JSON.parse(JSON.stringify(this.lastBasket));
+          this.persistCart();
+          this.openCart = true;
+          this.showToast('корзина восстановлена');
+        },
+
+        demoScore() {
+          return 4 * 7.5 + 3 * 8 + 2 * (7.5 - 3) - 2 * 3;
+        },
+
+        messengerContext() {
+          if (this.view !== 'pdp' || !this.product || !this.product.sku) return '';
+          const vin = this.vinState === 'ok' && this.vinInput
+            ? this.vinInput
+            : 'не проверен';
+          return 'Артикул ' + this.product.sku + ' · VIN ' + vin + ' · уточнить применимость';
+        },
+
+        messengerHref(channel) {
+          const base = this.messengers[channel];
+          if (!base) return '#';
+          if (channel === 'whatsapp') {
+            const text = this.messengerContext();
+            if (text) return base + '?text=' + encodeURIComponent(text);
+          }
+          return base;
+        },
+
+        showToast(msg) {
+          this.toast = msg;
+          clearTimeout(this._toastTimer);
+          this._toastTimer = setTimeout(() => { this.toast = ''; }, 2800);
+        },
+
+        init() {
+          if (!this.product) {
+            this.openProduct('filter');
+            this.view = 'home';
+          }
+          this.$watch('cohort', (c) => {
+            if (c === 'B') this.priceTier = 'fleet';
+            if (c === 'A') this.priceTier = 'fleet';
+            if (c === 'C') this.priceTier = 'retail';
+          });
+        },
+      };
+    }
+  </script>
+</body>
+</html>
